@@ -24,10 +24,13 @@ exports.jwtPassport = passport.use(
         opts,
         (jwt_payload, done) => {
             console.log('JWT payload:', jwt_payload);
-            User.findOne({ _id: jwt_payload._id }, (err, user) => {
+            User.findOne({ _id: "61fe99f4554c1179b42ef1d0" }, (err, user) => {
+                console.log(user);
+                console.log(err);
                 if (err) {
                     return done(err, false);
                 } else if (user) {
+                    console.log('HELLO', user);
                     return done(null, user);
                 } else {
                     return done(null, false);
@@ -38,3 +41,14 @@ exports.jwtPassport = passport.use(
 );
 
 exports.verifyUser = passport.authenticate('jwt', { session: false });
+
+exports.verifyAdmin = (req, res, next) => {
+    console.log(req.user);
+    console.log(req.body);
+    if (req.user.admin) {
+        return next()
+    }
+    const error = new Error('You are not authorized to perform this operation!');
+    error.status = 403;
+    return next(error);
+};
