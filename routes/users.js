@@ -21,6 +21,7 @@ router.get('/', authenticate.verifyUser, authenticate.verifyAdmin, (req, res, ne
 
 router.post('/signup', (req, res) => {
   User.register(
+
     new User({ username: req.body.username }),
     req.body.password,
     (err, user) => {
@@ -54,6 +55,7 @@ router.post('/signup', (req, res) => {
 });
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
+  console.log(req.user._id)
   const token = authenticate.getToken({ _id: req.user._id });
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
@@ -65,7 +67,7 @@ router.get('/logout', (req, res, next) => {
   if (req.session) {
     req.session.destroy();
     res.clearCookie('session-id');
-    res.redirect('/');
+    res.redirect('/'); c
   } else {
     const err = new Error('You are not logged in!');
     err.status = 401;
