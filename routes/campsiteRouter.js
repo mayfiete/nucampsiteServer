@@ -223,17 +223,22 @@ campsiteRouter.route('/:campsiteId/comments/:commentId')
                                 res.json(campsite);
                             })
                             .catch(err => next(err));
-                    } else if (!campsite) {
-                        err = new Error(`Campsite ${req.params.campsiteId} not found`);
-                        err.status = 404;
-                        return next(err);
                     } else {
-                        err = new Error(`Comment ${req.params.commentId} not found`);
-                        err.status = 404;
+                        err = new Error('You are not authorized to update this comment');
+                        err.status = 403;
                         return next(err);
                     }
+                } else if (!campsite) {
+                    err = new Error(`Campsite ${req.params.campsiteId} not found`);
+                    err.status = 404;
+                    return next(err);
+                } else {
+                    err = new Error(`Comment ${req.params.commentId} not found`);
+                    err.status = 404;
+                    return next(err);
                 }
-            })
+            }
+            )
             .catch(err => next(err));
     });
 
