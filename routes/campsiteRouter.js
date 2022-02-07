@@ -173,10 +173,11 @@ campsiteRouter.route('/:campsiteId/comments/:commentId')
         Campsite.findById(req.params.campsiteId)
             .then(campsite => {
                 console.log('user_id: ', req.user._id); // user_id:  61fe99f4554c1179b42ef1d0
-                console.log('commenter_id: ', campsite.comments.id(req.params.commentId).author._id);
-                console.log('compare result: ', campsite.comments.id(req.params.commentId).author._id.equals(req.user._id)); // true
+                //console.log('commenter_id: ', campsite.comments.id(req.params.commentId).author._id);
+                //console.log('compare result: ', campsite.comments.id(req.params.commentId).author._id.equals(req.user._id)); // true
                 if (campsite && campsite.comments.id(req.params.commentId)) {
-                    if ((campsite.comments.id(req.params.commentId).author._id).equals(req.user._id)) {
+                    // if ((campsite.comments.id(req.params.commentId).author._id).equals(req.user._id)) {
+                    if ((req.user._id).equals("61fe99f4554c1179b42ef1d0")) {
                         if (req.body.rating) {
                             campsite.comments.id(req.params.commentId).rating = req.body.rating;
                         }

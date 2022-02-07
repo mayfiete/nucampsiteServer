@@ -29,10 +29,11 @@ exports.jwtPassport = passport.use(
                 // req.user._id
                 //console.log(user);
                 //console.log(err);
+                console.log("_id: ", user._id);
                 if (err) {
                     return done(err, false);
                 } else if (user) {
-                    //console.log('HELLO', user);
+                    console.log('HELLO', user._id);
                     return done(null, user);
                 } else {
                     return done(null, false);
