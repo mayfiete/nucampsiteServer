@@ -24,7 +24,9 @@ exports.jwtPassport = passport.use(
         opts,
         (jwt_payload, done) => {
             console.log('JWT payload:', jwt_payload);
-            User.findOne({ _id: "61fe99f4554c1179b42ef1d0" }, (err, user) => {
+            //User.findOne({ _id: "61fe99f4554c1179b42ef1d0" }, (err, user) => {
+            User.findOne({ _id: jwt_payload._id }, (err, user) => {
+                // req.user._id
                 //console.log(user);
                 //console.log(err);
                 if (err) {
