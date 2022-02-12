@@ -124,9 +124,9 @@ favoriteRouter.route('/:campsiteId')
         res.end(`PUT operation not supported on /favorites/${req.params.favoriteId}`);
     })
     .delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
-
-        Favorite.findOne(req.user._id)
+        Favorite.findOne({ user: req.user._id })
             .then(favorite => {
+                console.log('favorite found: ', favorite);
                 if (favorite) {
                     const campsiteId = req.params.campsiteId;
                     if (favorite.campsites.includes(campsiteId)) {
@@ -137,7 +137,7 @@ favoriteRouter.route('/:campsiteId')
 
                             res.statusCode = 200;
                             res.setHeader('Content-Type', 'application/json');
-                            res.json(response);
+                            res.json(favorite);
                         })
                         .catch(err => next(err));
                 } else {
